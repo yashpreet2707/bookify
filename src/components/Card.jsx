@@ -1,8 +1,11 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { useNavigate } from 'react-router-dom';
 
 const BookCard = (props) => {
+    const navigate = useNavigate();
+
     return (
         <div className='ms-2'>
             <Card style={{ width: '18rem' }}>
@@ -12,7 +15,7 @@ const BookCard = (props) => {
                     <Card.Text>
                         This book has a title {props.name} and has the price of Rs. {props.price} and is sold by {props.displayName}.
                     </Card.Text>
-                    <Button variant="primary">hehe...</Button>
+                    <Button onClick={e => navigate(`/book/view/${props.id}`)} variant="primary">view</Button>
                 </Card.Body>
             </Card>
         </div>

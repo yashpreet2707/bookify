@@ -16,7 +16,7 @@ const HomePage = () => {
         <div className='container'>
             <h1 className='text-center mt-5 mb-5'>All Books Listing</h1>
             <CardGroup>
-                {books.map(book => <BookCard key={book.id} {...book.data()} />)}
+                {books.map(book => <BookCard key={book.id} id={book.id} {...book.data()} />)}
             </CardGroup>
         </div>
     )
