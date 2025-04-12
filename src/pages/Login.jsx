@@ -3,12 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import { useFirebase } from '../context/Firebase';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
     const firebase = useFirebase();
-    console.log(firebase)
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("")
@@ -28,6 +27,7 @@ const LoginPage = () => {
 
     return (
         <div className='container mt-5'>
+            <h1 className='text-center mb-5'>Login Page</h1>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -43,6 +43,7 @@ const LoginPage = () => {
                 </Button>
             </Form>
             <Button className='mt-5' onClick={firebase.signinWithGoogle} variant='danger'>Sign in with Google</Button>
+            <NavLink to='/register'><Button variant='warning' className='mt-5 ms-5'>Register as new user ?</Button></NavLink>
         </div>
     )
 }

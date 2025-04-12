@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import { useFirebase } from '../context/Firebase';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
 
@@ -15,7 +15,6 @@ const RegisterPage = () => {
 
     useEffect(() => {
         if (firebase.isLoggedIn) {
-            // navigate to home
             navigate("/")
         }
     }, [firebase, navigate])
@@ -27,6 +26,7 @@ const RegisterPage = () => {
 
     return (
         <div className='container mt-5'>
+            <h1 className='text-center mb-5'>SignUp Page</h1>
             <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -40,7 +40,9 @@ const RegisterPage = () => {
                 <Button variant="primary" type="submit">
                     Register
                 </Button>
+
             </Form>
+            <NavLink to='/login'><Button variant='warning' className='mt-5'>Already a user ?</Button></NavLink>
         </div>
     )
 }

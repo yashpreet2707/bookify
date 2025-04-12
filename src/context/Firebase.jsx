@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createContext, useContext, useState, useEffect } from "react";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 
 // creating the firebase context for usage
 const FirebaseContext = createContext(null);
@@ -18,8 +19,9 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-const firebaseAuth = getAuth(firebaseApp);
+export const firebaseAuth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
+const firestore = getFirestore(firebaseApp)
 
 export const FirebaseProvider = (props) => {
 
@@ -47,10 +49,30 @@ export const FirebaseProvider = (props) => {
         signInWithPopup(firebaseAuth, googleProvider);
     }
 
+    const logoutUser = () => {
+        signOut(firebaseAuth);
+    }
+
+    const handleCreateNewLising = async (name, isbn, price) => {
+        return await addDoc(collection(firestore, 'books'), {
+            name,
+            isbn,
+            price,
+            userId: user.uid,
+            userEmail: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+        })
+    }
+
+    const listAllBooks = () => {
+        return getDocs(collection(firestore, 'books'))
+    }
+
     const isLoggedIn = (user) ? true : false
 
     return (
-        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, signinUserWithEmailAndPassword, signinWithGoogle, isLoggedIn }}>
+        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, signinUserWithEmailAndPassword, signinWithGoogle, logoutUser, isLoggedIn, handleCreateNewLising, listAllBooks }}>
             {props.children}
         </FirebaseContext.Provider>
     )
