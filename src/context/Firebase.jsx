@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createContext, useContext, useState, useEffect } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
-import { getFirestore, collection, addDoc, getDocs, getDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, getDoc, doc, query, where } from "firebase/firestore";
 
 // creating the firebase context for usage
 const FirebaseContext = createContext(null);
@@ -86,10 +86,18 @@ export const FirebaseProvider = (props) => {
         return result;
     }
 
+    const fetchMyBooks = async (userID) => {
+        const collectionRef = collection(firestore, "books")
+        const q = query(collectionRef, where("userID", "==", userID));
+
+        const result = await getDocs(q);
+        console.log(result)
+    }
+
     const isLoggedIn = (user) ? true : false
 
     return (
-        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, signinUserWithEmailAndPassword, signinWithGoogle, logoutUser, isLoggedIn, handleCreateNewLising, listAllBooks, getBookByID, placeOrder }}>
+        <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, signinUserWithEmailAndPassword, signinWithGoogle, logoutUser, isLoggedIn, handleCreateNewLising, listAllBooks, getBookByID, placeOrder, fetchMyBooks, user }}>
             {props.children}
         </FirebaseContext.Provider>
     )

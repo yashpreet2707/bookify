@@ -8,6 +8,7 @@ import LoginPage from './pages/Login'
 import ListingPage from './pages/List';
 import HomePage from './pages/Home';
 import BookDetailPage from './pages/Detail';
+import OrdersPage from './pages/ViewOrders';
 
 // components
 import MyNavBar from './components/Navbar';
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/book/list" element={<ListingPage />} />
         <Route path="/book/view/:bookID" element={<BookDetailPage />} />
+        <Route path="/book/orders" element={<OrdersPage />} />
       </Routes >
     </div>
   )

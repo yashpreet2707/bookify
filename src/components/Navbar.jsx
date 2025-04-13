@@ -37,10 +37,10 @@ const MyNavBar = () => {
         <div>
             <Navbar bg="dark" data-bs-theme="dark">
                 <Container>
-                    <Navbar.Brand href="#"><NavLink to='/' style={{ color: "gray", textDecoration: "none", fontSize: "24px" }}>Bookify</NavLink></Navbar.Brand>
+                    <Navbar.Brand href="#">Bookify</Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link href="/book/list" style={{ fontSize: "20px" }}>Add Listing</Nav.Link>
-                        <Button onClick={handleLogout} className='ms-5' variant='warning'>Log Out</Button>
+                        {(user) && <Button onClick={handleLogout} className='ms-5' variant='warning'>Log Out</Button>}
                     </Nav>
                 </Container>
             </Navbar>
